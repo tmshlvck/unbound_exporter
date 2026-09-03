@@ -39,7 +39,8 @@ jobs:
         run: |
           go test -mod=readonly -v -race -covermode=atomic -coverprofile=coverage.out ./...
       - uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
-        if: success()
+        # Only the upstream repo has Codecov configured; skip on forks.
+        if: success() && github.repository == 'letsencrypt/unbound_exporter'
         with:
           file: ./coverage.out
           flags: unbound_exporter_tests
